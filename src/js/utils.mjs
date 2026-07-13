@@ -7,8 +7,18 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  const storedData = localStorage.getItem(key);
+  return storedData ? JSON.parse(storedData) : null;
 }
+
+export function normalizeCartItems(items) {
+  if (Array.isArray(items)) {
+    return items;
+  }
+
+  return items ? [items] : [];
+}
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
@@ -20,19 +30,4 @@ export function setClick(selector, callback) {
     callback();
   });
   qs(selector).addEventListener('click', callback);
-}
-
-// render a list of items using a template function
-export function renderListWithTemplate(
-  templateFn,
-  parentElement,
-  list,
-  position = 'afterbegin',
-  clear = false,
-) {
-  if (clear) {
-    parentElement.innerHTML = '';
-  }
-  const htmlStrings = list.map(templateFn);
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
