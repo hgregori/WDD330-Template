@@ -1,0 +1,6 @@
+Team Trello Board: https://trello.com/b/[YOUR_BOARD_ID]
+
+Team Members:
+- Henrique Gregori
+- Lolade Busayo Akinrolabu
+- Clement Nii Odai Afotey
