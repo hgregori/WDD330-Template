@@ -1,5 +1,5 @@
 import { getParam, normalizeCartItems } from '../js/utils.mjs';
-
+// Testing utility helpers that are used in the product page and cart page.
 describe('Utility helpers', () => {
   beforeEach(() => {
     window.history.replaceState({}, '', '/');
