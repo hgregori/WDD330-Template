@@ -1,4 +1,4 @@
-import { getLocalStorage, normalizeCartItems, renderListWithTemplate, setLocalStorage } from './utils.mjs';
+import { getLocalStorage, renderListWithTemplate, setLocalStorage } from './utils.mjs';
 
 function cartItemTemplate(item) {
   return `<li class="cart-card divider">
@@ -21,9 +21,22 @@ export default class ShoppingCart {
   }
 
   init() {
-    const cartItems = normalizeCartItems(getLocalStorage('so-cart'));
+    const cartItems = getLocalStorage('so-cart') || [];
     this.renderList(cartItems);
+    this.renderTotal(cartItems);
     this.bindRemoveButtons();
+  }
+
+  renderTotal(list) {
+    const footer = document.querySelector(".cart-footer");
+    const totalEl = document.querySelector(".cart-total span");
+    if (list && list.length > 0) {
+      footer.classList.remove("hide");
+      const total = list.reduce((sum, item) => sum + item.FinalPrice, 0);
+      totalEl.innerHTML = `$${total.toFixed(2)}`;
+    } else {
+      footer.classList.add("hide");
+    }
   }
 
   renderList(list) {
@@ -39,7 +52,7 @@ export default class ShoppingCart {
   }
 
   removeFromCart(itemId) {
-    const cartItems = normalizeCartItems(getLocalStorage('so-cart'));
+    const cartItems = getLocalStorage('so-cart') || [];
     const updatedCart = cartItems.filter((item) => item.Id !== itemId);
     setLocalStorage('so-cart', updatedCart);
     this.init();
